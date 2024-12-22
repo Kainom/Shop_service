@@ -2,9 +2,12 @@ package com.kainom.shop.patterns.adapter;
 
 import java.util.stream.Collectors;
 
+import org.springframework.stereotype.Component;
+
 import com.kainom.shop.dto.ShopDTO;
 import com.kainom.shop.models.Shop;
 
+@Component
 public class ShopAdapter implements IShopAdapter {
 
     IItemAdapter itemAdapter;
