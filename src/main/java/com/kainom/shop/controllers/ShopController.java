@@ -21,12 +21,8 @@ public class ShopController {
 
     @Autowired
     private ShopService shopService;
-    private IShopAdapter shopAdapter;
 
-    private ShopController(IShopAdapter shopAdapter) {
-        this.shopAdapter = shopAdapter;
-    }
-
+    
     @GetMapping("/")
     public List<ShopDTO> getShops() {
         return shopService.getAll();
