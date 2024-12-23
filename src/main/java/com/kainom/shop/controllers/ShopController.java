@@ -47,4 +47,9 @@ public class ShopController {
     public ShopDTO addShop(@RequestBody ShopDTO shop) {
         return shopService.save(shop);
     }
+
+    @GetMapping("/error")
+    public String error() {
+        throw new RuntimeException("Error occurred!");
+    }
 }

@@ -39,7 +39,7 @@ public class ShopService {
     }
 
     public List<ShopDTO> getByDate(ShopDTO shopDTO) {
-        return shopRepository.findAllByDateGreaterThanEquals(shopDTO.date())
+        return shopRepository.findAllByDateGreaterThanEqual(shopDTO.date())
                 .stream()
                 .map(shopAdapter::adapt)
                 .collect(Collectors.toList());

@@ -1,4 +1,4 @@
-CREATE SCHEMA IF NO EXISTS shopping;
+CREATE SCHEMA IF NOT EXISTS shopping;
 
 USE shopping;
 

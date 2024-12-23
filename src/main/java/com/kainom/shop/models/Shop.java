@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.CollectionTable;
+import jakarta.persistence.Column;
 import jakarta.persistence.JoinColumn;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,17 +19,19 @@ import jakarta.persistence.FetchType;
 
 @Getter
 @Setter
-@Builder    
+@Builder
 @Entity(name = "shop")
 public class Shop {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(name = "user_identifier")
     private String userIdentifier;
 
     private Double total;
 
+    @Column(name = "date_shop")
     private Date date;
 
     @ElementCollection(fetch = FetchType.EAGER)
