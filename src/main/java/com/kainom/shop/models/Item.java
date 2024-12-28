@@ -15,5 +15,5 @@ import lombok.Setter;
 @Embeddable
 public class Item {
     private String productIdentifier;
-    private Float price;
+    private Double price;
 }
