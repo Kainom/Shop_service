@@ -1,6 +1,6 @@
 package com.kainom.shop.patterns.adapter;
 
-import com.kainom.shop.dto.ItemDTO;
+import com.kainom.dtos.ItemDTO;
 import com.kainom.shop.models.Item;
 
 public interface IItemAdapter {

@@ -2,7 +2,7 @@ package com.kainom.shop.patterns.adapter;
 
 import org.springframework.stereotype.Component;
 
-import com.kainom.shop.dto.ItemDTO;
+import com.kainom.dtos.ItemDTO;
 import com.kainom.shop.models.Item;
 
 @Component

@@ -4,7 +4,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
-import com.kainom.shop.dto.ShopDTO;
+import com.kainom.dtos.ShopDTO;
 import com.kainom.shop.models.Shop;
 
 @Component

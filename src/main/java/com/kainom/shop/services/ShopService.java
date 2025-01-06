@@ -6,19 +6,25 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
-import com.kainom.shop.dto.ShopDTO;
+import com.kainom.dtos.ItemDTO;
+import com.kainom.dtos.ShopDTO;
 import com.kainom.shop.models.Shop;
 import com.kainom.shop.patterns.adapter.IShopAdapter;
-import com.kainom.shop.repository.ReportRepository;
 import com.kainom.shop.repository.ShopRepository;
 
 @Service
 public class ShopService {
+
     @Autowired
     private ShopRepository shopRepository;
+
+    @Autowired
+    private ProductService productService;
+
+    @Autowired
+    private UserService userService;
 
     private IShopAdapter shopAdapter;
 
@@ -42,6 +48,7 @@ public class ShopService {
     }
 
     public List<ShopDTO> getByDate(ShopDTO shopDTO) {
+
         return shopRepository.findAllByDateGreaterThanEqual(shopDTO.date())
                 .stream()
                 .map(shopAdapter::adapt)
@@ -61,14 +68,41 @@ public class ShopService {
     }
 
     public ShopDTO save(ShopDTO shop) {
-        Double total = shop.items()
+
+        if (userService.getUserByCpf(shop.userIdentifier()) == null)
+            return null;
+
+        List<ItemDTO> items = validateProducts(shop.items()) ;
+        if (items == null)
+            return null;
+
+        Shop newShops = shopAdapter.adapt(shop);
+        newShops.setTotal(items
                 .stream()
-                .map(x -> x.price())
-                .reduce((Double) 0d, Double::sum);
-        Shop newShop = shopAdapter.adapt(shop);
-        newShop.setTotal(total);
-        return shopAdapter.adapt(shopRepository.save(newShop));
+                .map(p -> p.price())
+                .reduce(0d, Double::sum));
+
+        newShops.setDate(new Date());
+        return shopAdapter.adapt(shopRepository.save(newShops));
 
     }
+
+    public List<ItemDTO> validateProducts(List<ItemDTO> items) {
+        Boolean isNull = items
+                .stream()
+                .map(product -> product.productIdentifier())
+                .anyMatch(e -> productService.getProductByIdentifier(e) == null);
+
+        if (isNull)
+            return null;
+
+
+        List<ItemDTO> itemDTOs = items
+                .stream()
+                .map(item -> new ItemDTO(item.productIdentifier(),
+                        productService.getProductByIdentifier(item.productIdentifier()).getPreco()))
+                .collect(Collectors.toList());
+        return itemDTOs;
+            }
 
 }

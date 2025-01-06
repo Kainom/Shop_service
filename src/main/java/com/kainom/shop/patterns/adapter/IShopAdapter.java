@@ -1,6 +1,6 @@
 package com.kainom.shop.patterns.adapter;
 
-import com.kainom.shop.dto.ShopDTO;
+import com.kainom.dtos.ShopDTO;
 import com.kainom.shop.models.Shop;
 
 public interface IShopAdapter {
