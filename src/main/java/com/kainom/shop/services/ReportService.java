@@ -7,9 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kainom.shop.dto.ShopDTO;
 import com.kainom.shop.dto.ShopReportDTO;
-import com.kainom.shop.patterns.adapter.IShopAdapter;
 import com.kainom.shop.repository.ReportRepository;
 
 @Service

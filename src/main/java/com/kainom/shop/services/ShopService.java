@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.kainom.shop.dto.ShopDTO;
@@ -19,12 +20,10 @@ public class ShopService {
     @Autowired
     private ShopRepository shopRepository;
 
-    private ReportRepository reportRepository;
     private IShopAdapter shopAdapter;
 
-    private ShopService(IShopAdapter shopAdapter, ReportRepository reportRepository) {
+    private ShopService(IShopAdapter shopAdapter) {
         this.shopAdapter = shopAdapter;
-        this.reportRepository = reportRepository;
     }
 
     public List<ShopDTO> getAll() {
@@ -50,7 +49,7 @@ public class ShopService {
     }
 
     public List<ShopDTO> getShopsByFilter(Date dataDeInicio, Date dataDeFim, Double minValor) {
-        return reportRepository.getShopByFilters(dataDeInicio, dataDeFim, minValor)
+        return shopRepository.getShopByFilters(dataDeInicio, dataDeFim, minValor)
                 .stream()
                 .map(shopAdapter::adapt)
                 .collect(Collectors.toList());
