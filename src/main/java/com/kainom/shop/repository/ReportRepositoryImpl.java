@@ -7,7 +7,7 @@ import java.util.List;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
-import com.kainom.shop.dto.ShopReportDTO;
+import com.kainom.dtos.ShopReportDTO;
 import com.kainom.shop.models.Shop;
 
 import jakarta.persistence.EntityManager;
