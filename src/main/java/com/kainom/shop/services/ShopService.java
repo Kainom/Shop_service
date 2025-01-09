@@ -21,10 +21,10 @@ public class ShopService {
     private ShopRepository shopRepository;
 
     @Autowired
-    private ProductService productService;
+    private ProductService product;
 
     @Autowired
-    private UserService userService;
+    private UserService user;
 
     private IShopAdapter shopAdapter;
 
@@ -69,7 +69,7 @@ public class ShopService {
 
     public ShopDTO save(ShopDTO shop) {
 
-        if (userService.getUserByCpf(shop.userIdentifier()) == null)
+        if (user.getUserByCpf(shop.userIdentifier()) == null)
             return null;
 
         List<ItemDTO> items = validateProducts(shop.items()) ;
@@ -91,7 +91,7 @@ public class ShopService {
         Boolean isNull = items
                 .stream()
                 .map(product -> product.productIdentifier())
-                .anyMatch(e -> productService.getProductByIdentifier(e) == null);
+                .anyMatch(e -> product.getProductByIdentifier(e) == null);
 
         if (isNull)
             return null;
@@ -100,7 +100,7 @@ public class ShopService {
         List<ItemDTO> itemDTOs = items
                 .stream()
                 .map(item -> new ItemDTO(item.productIdentifier(),
-                        productService.getProductByIdentifier(item.productIdentifier()).getPreco()))
+                        product.getProductByIdentifier(item.productIdentifier()).getPreco()))
                 .collect(Collectors.toList());
         return itemDTOs;
             }

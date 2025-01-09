@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kainom.dtos.ShopDTO;
 import com.kainom.dtos.ShopReportDTO;
-import com.kainom.shop.services.ReportService;
+    import com.kainom.shop.services.ReportService;
 import com.kainom.shop.services.ShopService;
 
 @RestController
