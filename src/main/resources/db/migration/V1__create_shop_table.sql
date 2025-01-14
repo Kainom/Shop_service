@@ -4,7 +4,7 @@ USE shopping;
 
 CREATE TABLE
     shop (
-        id BIGINT PRIMARY KEY,
+        id BIGINT AUTO_INCREMENT PRIMARY KEY,
         user_identifier VARCHAR(100) NOT NULL,
         date_shop TIMESTAMP NOT NULL,
         total DECIMAL(10, 2) NOT NULL

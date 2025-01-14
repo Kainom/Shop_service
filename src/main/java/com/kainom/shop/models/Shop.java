@@ -12,6 +12,7 @@ import jakarta.persistence.ElementCollection;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.JoinColumn;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,10 +22,11 @@ import jakarta.persistence.FetchType;
 @Setter
 @Builder
 @Entity(name = "shop")
+@AllArgsConstructor
 public class Shop {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "user_identifier")
     private String userIdentifier;
@@ -37,5 +39,9 @@ public class Shop {
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "item", joinColumns = @JoinColumn(name = "shop_id"))
     private List<Item> items;
+
+    public Shop(){
+        
+    }
 
 }

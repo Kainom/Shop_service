@@ -64,12 +64,18 @@ public class ShopService {
 
     public ShopDTO findById(Long productId) {
         Optional<Shop> shop = shopRepository.findById(productId);
+        if (!shop.isPresent()){
+            throw new RuntimeException("Shop not found");
+        }
+
+
+
         return shop.map(shopAdapter::adapt).orElse(null);
     }
 
-    public ShopDTO save(ShopDTO shop) {
+    public ShopDTO save(ShopDTO shop,String key) {
 
-        if (user.getUserByCpf(shop.userIdentifier()) == null)
+        if (user.getUserByCpf(shop.userIdentifier(),key) == null)
             return null;
 
         List<ItemDTO> items = validateProducts(shop.items()) ;

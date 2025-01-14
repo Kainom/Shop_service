@@ -55,22 +55,33 @@ public class ReportRepositoryImpl implements ReportRepository {
     @Override
     public ShopReportDTO getReportByDate(Date dataInicio, Date dataFim) {
         StringBuilder sb = new StringBuilder();
-
-        sb.append("SELECT COUNT(sp.id),SUM(sp.total),AVG(sp.total)");
-        sb.append(" WHERE sp.date ");
-        sb.append("BETWEEN :dataInicio AND :dataFim");
-        // sb.append("GROUP BY DATE(sp.date)");
+        System.out.println(dataFim);
+        sb.append("SELECT COUNT(sp.id), SUM(sp.total), AVG(sp.total) ");
+        sb.append("FROM shop sp ");
+        sb.append("WHERE sp.date BETWEEN :dataInicio AND :dataFim ");
+        // sb.append("WHERE sp.date BETWEEN :dataInicio AND :dataFim ");
+        // sb.append("GROUP BY FUNCTION('DATE', sp.date)");
 
         Query query = enetityManager.createQuery(sb.toString());
 
         query.setParameter("dataInicio", dataInicio);
         query.setParameter("dataFim", dataFim);
 
-        Object[] resultList = (Object[]) query.getSingleResult();
+        @SuppressWarnings("unchecked")
+        List<Object[]> resultList = query.getResultList();
 
-        Integer count = ((Long) resultList[0]).intValue();
-        Double total = (Double) resultList[1];
-        Double mean = (Double) resultList[2];
+        // Verifica se a lista está vazia
+        if (resultList.isEmpty()) {
+            // Retorna valores padrão ou nulos
+            return new ShopReportDTO(0, 0.0, 0.0);
+        }
+
+        // Obtém o primeiro resultado
+        Object[] result = resultList.get(0);
+
+        Integer count = ((Long) result[0]).intValue();
+        Double total = (Double) result[1];
+        Double mean = (Double) result[2];
 
         return new ShopReportDTO(count, total, mean);
     }

@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import org.springframework.web.bind.annotation.RestController;
 
-
 import com.kainom.dtos.ShopDTO;
 import com.kainom.dtos.ShopReportDTO;
-    import com.kainom.shop.services.ReportService;
+import com.kainom.shop.services.ReportService;
 import com.kainom.shop.services.ShopService;
 
 @RestController
@@ -62,6 +62,7 @@ public class ShopController {
     public ShopReportDTO getReportByDate(
             @RequestParam(name = "dataInicio", required = true) @DateTimeFormat(pattern = "dd/MM/yyyy") Date dataInicio,
             @RequestParam(name = "dataFim", required = true) @DateTimeFormat(pattern = "dd/MM/yyyy") Date dataFim) {
+                System.out.println(dataFim);
         return reportService.getReportByDate(dataInicio, dataFim);
     }
 
@@ -71,8 +72,9 @@ public class ShopController {
     }
 
     @PostMapping("/")
-    public ShopDTO addShop(@RequestBody ShopDTO shop) {
-        return shopService.save(shop);
+    public ShopDTO addShop(@RequestHeader(name = "key", required = true) String key, @RequestBody ShopDTO shop) {
+
+        return shopService.save(shop, key);
     }
 
 }

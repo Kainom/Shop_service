@@ -34,5 +34,6 @@ public class ShopControllerAdvice {
 
         return new ErrorDTO(status, message, new Date());
     }
+    
 
 }
