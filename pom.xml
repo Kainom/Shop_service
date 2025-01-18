@@ -29,6 +29,7 @@
 	</scm>
 	<properties>
 		<java.version>23</java.version>
+		<docker.image.prefix>loja</docker.image.prefix>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -40,21 +41,10 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webflux</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
-		<!-- <dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency> -->
-		<dependency>
-			<groupId>me.paulschwarz</groupId>
-			<artifactId>spring-dotenv</artifactId>
-			<version>4.0.0</version>
-		</dependency>
-
 		<dependency>
 			<groupId>me.paulschwarz</groupId>
 			<artifactId>spring-dotenv</artifactId>
@@ -72,7 +62,6 @@
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-mysql</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -103,6 +92,7 @@
 
 	<build>
 		<plugins>
+			<!-- Plugin para Compilação com Lombok -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -115,6 +105,8 @@
 					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
+
+			<!-- Plugin do Spring Boot para empacotar a aplicação -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
@@ -127,6 +119,21 @@
 					</excludes>
 				</configuration>
 			</plugin>
+
+			<!-- Plugin do Docker (Spotify) para criar a imagem -->
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>dockerfile-maven-plugin</artifactId>
+				<version>1.4.9</version>
+				<configuration>
+					<repository>${docker.image.prefix}/${project.artifactId}</repository>
+					<dockerFile>${project.basedir}/src/main/docker/Dockerfile</dockerFile>
+					<tags>
+						<tag>${project.version}</tag>
+					</tags>
+				</configuration>
+			</plugin>
+
 		</plugins>
 	</build>
 
